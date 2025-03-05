@@ -1,0 +1,17 @@
+---
+title: "Making dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    storyboard: true
+date: "2025-03-05"
+---
+
+
+```{r}
+library(ggplot2)
+library(plotly)
+library(tidyverse)
+aisc2024 <- read_csv("aisc2024.csv")
+plot <- aisc2024 |> ggplot(aes(x = tempo)) + geom_histogram(binwidth = 10)
+ggplotly(plot)
+```
