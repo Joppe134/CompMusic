@@ -15,3 +15,9 @@ aisc2024 <- read_csv("aisc2024.csv")
 plot <- aisc2024 |> ggplot(aes(x = tempo)) + geom_histogram(binwidth = 10)
 ggplotly(plot)
 ```
+
+
+```{r}
+
+
+```
