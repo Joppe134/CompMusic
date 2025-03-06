@@ -18,6 +18,7 @@ ggplotly(plot)
 
 
 ```{r}
+source("compmus.R")
 
 
 ```
