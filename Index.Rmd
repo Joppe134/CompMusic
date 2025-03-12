@@ -1,24 +1,41 @@
 ---
-title: "Making dashboard"
-output: 
-  flexdashboard::flex_dashboard:
-    storyboard: true
-date: "2025-03-05"
+title: "Storyboard Page"
+output: flexdashboard::flex_dashboard
 ---
 
+Analysis {.storyboard}
+=========================================
+
+### Introduction
 
 ```{r}
-library(ggplot2)
-library(plotly)
 library(tidyverse)
-aisc2024 <- read_csv("aisc2024.csv")
-plot <- aisc2024 |> ggplot(aes(x = tempo)) + geom_histogram(binwidth = 10)
-ggplotly(plot)
+classcorpus <- read_csv("compmus2025.csv")
+classcorpus|> ggplot(aes(x = tempo)) + geom_histogram(binwidth = 1)
+
 ```
 
+***
+Track 1:
+I made this beat about three years ago. It's designed for rapping and is inspired by the style of beats used by artists like Travis Scott. 
+Track 2: 
+Made with: https://stableaudio.com/generate
+Prompt: I would like a minimal house track. It has to have some dark feeling to it. The track needs to bring you in a state of trance by combining call and response and the use of bell sounding instruments together with nice soothing synths. duration 2 to 4 minutes and it must be 4 to the floor rhythm.
+
+
+### Visualisation
 
 ```{r}
-source("compmus.R")
-
-
 ```
+
+### Discussion
+
+```{r}
+```
+
+Details
+=========================================
+
+Column
+-----------------------------------------
+
