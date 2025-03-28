@@ -50,18 +50,21 @@ tymon_2      <- classcorpus %>% filter(filename == "tymon-z-2")
 
 ```
 
-Project Overview
+
+Track level features
 =====================================
 
 Column {.sidebar data-width=300}
 -------------------------------------
-### Description
+### Arousal vs Tempo Analysis
 
-The scatterplot comparing arousal vs. tempo reveals several differences between AI-generated and human-composed tracks. Human tracks tend to cluster around the 120 BPM mark, aligning with prior research on preferred tempo (Moelants, 2002), and generally exhibit moderate arousal levels, suggesting a balance between energy and control.
+The scatterplot comparing arousal vs. tempo reveals key differences between AI-generated and human-composed tracks. hello
 
-In contrast, AI tracks show a wider spread in both tempo and arousal. One AI track (tymon-z-2) has an extremely low tempo (30 BPM) paired with low arousal, standing out as a clear outlier. Another AI track exhibits very high tempo and arousal, suggesting a possible lack of nuance or human-intent pacing.
+Human tracks cluster near the 120 BPM mark, aligning with Moelants’ theory of a preferred tempo for natural movement and listener comfort (Moelants, 2002). Their arousal levels are also moderate, indicating a balance between musical energy and emotional restraint. This may suggest that human composers intuitively modulate arousal to maintain listener engagement without overstimulation.
 
-Overall, AI tracks appear to explore more extreme emotional-temporal spaces, whereas human tracks remain within a more naturalistic or listener-optimized range. This may reflect the human ability to intuitively regulate musical energy and pacing, in contrast to AI systems that lack experiential grounding.
+In contrast, AI-generated tracks show a broader distribution across both dimensions. For instance, tymon-z-2 stands out as an outlier, combining very low tempo (~30 BPM) with low arousal, resulting in a track that might be perceived as lifeless or static. On the opposite end, another AI track combines very high tempo and high arousal, suggesting a lack of pacing control or overcompensation in emotional delivery.
+
+These results support the idea that AI music systems may lack embodied musical intuition, instead generating tracks that explore more extreme emotional-temporal spaces. Human compositions appear more grounded in perceptual and cultural norms, whereas AI music—while often plausible—may neglect subtler dynamics in musical expression.
 
 ```{r}
 
@@ -91,7 +94,20 @@ ggplot(selected, aes(x = tempo, y = arousal, color = origin)) +
   theme_minimal()
 
 ```
+
 ```{r}
+
+# Scatterplot: Valence vs Arousal
+ggplot(selected, aes(x = valence, y = arousal, color = origin)) +
+  geom_point(size = 3) +
+  geom_text(aes(label = track), vjust = -1, size = 3) +  # optional labels
+  labs(
+    title = "Valence vs Arousal of Selected Tracks",
+    x = "Valence (Positivity)",
+    y = "Arousal (Energy)",
+    color = "Track Origin"
+  ) +
+  theme_minimal()
 
 ```
 
