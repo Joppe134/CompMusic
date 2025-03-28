@@ -1,6 +1,7 @@
 ---
 title: "Storyboard Page"
 output: flexdashboard::flex_dashboard
+
 ---
 
 Analysis {.storyboard}
@@ -10,27 +11,95 @@ Analysis {.storyboard}
 
 ```{r}
 library(tidyverse)
+library(shiny)
+library(flexdashboard)
+library(tidyverse)
+
+library(tidymodels)
+library(leaflet)
+library(leaflet.extras)
+library(cowplot)
+library(stringr)
+library(ggdendro)
+library(heatmaply)
+library(tidymodels)
+source("compmus.R")
+
+
+
 classcorpus <- read_csv("compmus2025.csv")
-classcorpus|> ggplot(aes(x = tempo)) + geom_histogram(binwidth = 1)
+
+# Lennart P – beide nummers
+lennart_p_1 <- classcorpus %>% filter(str_detect(filename, "^lennart-p-1$"))
+lennart_p_2 <- classcorpus %>% filter(str_detect(filename, "^lennart-p-2$"))
+
+# Joppe – eerste nummer
+joppe_1 <- classcorpus %>% filter(str_detect(filename, "^joppe-[a-z]-1$"))
+
+# Elze – beide nummers
+elze_1 <- classcorpus %>% filter(str_detect(filename, "^elze-[a-z]-1$"))
+elze_2 <- classcorpus %>% filter(str_detect(filename, "^elze-[a-z]-2$"))
+
+# AI-generated tracks apart opslaan
+joppe_2      <- classcorpus %>% filter(filename == "joppe-h-2")
+onni_1       <- classcorpus %>% filter(filename == "onni-q-1")
+onni_2       <- classcorpus %>% filter(filename == "onni-q-2")
+thomas_2     <- classcorpus %>% filter(filename == "thomas-m-2")
+tymon_2      <- classcorpus %>% filter(filename == "tymon-z-2")
+
 
 ```
 
-***
-Track 1:
-I made this beat about three years ago. It's designed for rapping and is inspired by the style of beats used by artists like Travis Scott. 
-Track 2: 
-Made with: https://stableaudio.com/generate
-Prompt: I would like a minimal house track. It has to have some dark feeling to it. The track needs to bring you in a state of trance by combining call and response and the use of bell sounding instruments together with nice soothing synths. duration 2 to 4 minutes and it must be 4 to the floor rhythm.
+Project Overview
+=====================================
 
+Column {.sidebar data-width=300}
+-------------------------------------
+### Description
 
-### Visualisation
+The scatterplot comparing arousal vs. tempo reveals several differences between AI-generated and human-composed tracks. Human tracks tend to cluster around the 120 BPM mark, aligning with prior research on preferred tempo (Moelants, 2002), and generally exhibit moderate arousal levels, suggesting a balance between energy and control.
+
+In contrast, AI tracks show a wider spread in both tempo and arousal. One AI track (tymon-z-2) has an extremely low tempo (30 BPM) paired with low arousal, standing out as a clear outlier. Another AI track exhibits very high tempo and arousal, suggesting a possible lack of nuance or human-intent pacing.
+
+Overall, AI tracks appear to explore more extreme emotional-temporal spaces, whereas human tracks remain within a more naturalistic or listener-optimized range. This may reflect the human ability to intuitively regulate musical energy and pacing, in contrast to AI systems that lack experiential grounding.
 
 ```{r}
+
+
+library(tidyverse)
+
+# Combineer je 10 geselecteerde tracks
+selected <- bind_rows(
+  joppe_1, lennart_p_1, lennart_p_2, elze_1, elze_2,     # Human
+  joppe_2, onni_1, onni_2, thomas_2, tymon_2              # AI
+) %>%
+  mutate(
+    origin = rep(c("Human", "AI"), each = 5),
+    track = filename
+  )
+
+# Maak scatterplot: Arousal vs Tempo
+ggplot(selected, aes(x = tempo, y = arousal, color = origin)) +
+  geom_point(size = 3) +
+  geom_text(aes(label = track), vjust = -1, size = 3) +  # optioneel: labels
+  labs(
+    title = "Arousal vs Tempo of Selected Tracks",
+    x = "Tempo (BPM)",
+    y = "Arousal",
+    color = "Track Origin"
+  ) +
+  theme_minimal()
+
+```
+```{r}
+
 ```
 
 ### Discussion
 
 ```{r}
+
+
 ```
 
 Details
